@@ -1,11 +1,21 @@
-import { signUp } from '../services/auth.services.js';
+import { signUp, login, logout } from '../services/auth.services.js';
+import generateTokenAndSetCookie from '../utils/generate.token.js';
 
 const loginUser = async (req, res) => {
-    res.send('Login Up');
+    const { userName, password } = req.body;
+    const result = await login({ userName, password }, res);
+    if (result.errorCode === -1) {
+        return res.status(400).json(result);
+    }
+    res.status(200).json(result);
 };
 
 const logoutUser = async (req, res) => {
-    res.send('Logout');
+    const result = logout(res);
+    if (result.errorCode === -1) {
+        return res.status(400).json(result);
+    }
+    res.status(200).json(result);
 }
 
 const signupUser = async (req, res) => {
@@ -39,6 +49,7 @@ const signupUser = async (req, res) => {
     if (result.errorCode === -1) {
         return res.status(400).json(result);
     }
+    generateTokenAndSetCookie(result.data._id, res);
     res.status(201).json(result);
 }
 
