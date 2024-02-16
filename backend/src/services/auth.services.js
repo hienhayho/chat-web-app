@@ -47,6 +47,7 @@ const signUp = async (userInfo) => {
             };
         }
     } catch (error) {
+        console.log("Error in signUp services: ", error.message)
         return {
             status: "error",
             errorCode: -1,
@@ -80,7 +81,7 @@ const login = async (userInfo, res) => {
             }
         }
     } catch (error) {
-        console.log(error);
+        console.log("Error in login services: ", error.message);
         return {
             status: "error",
             errorCode: -1,
@@ -100,6 +101,7 @@ const logout = (res) => {
             message: "User logged out successfully"
         }
     } catch (error) {
+        console.log("Error in logout services: ", error.message);
         return {
             status: "error",
             errorCode: -1,
